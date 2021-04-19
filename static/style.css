@@ -1,0 +1,91 @@
+body{
+    background-color: #afc1e3;
+
+    font-family: a_AlbionicTitulInfl, serif;
+    font-style:inherit;
+    font-size: 18px;
+}
+.slau div{
+    text-align: center;
+    display:inline-block;
+}
+
+.slau_matrix{
+    background-color: #62abdb
+}
+.vector{
+   background-color: #0a74e5
+}
+.result{
+    background-color: #0a417c;
+    width:40px;
+}
+
+input,output{
+    width:40px;
+}
+input:hover{
+    background-color: #afc1e3;
+    -webkit-transition-duration: 0.4s; /* Safari */
+}
+.Error{
+    margin-left: 150px;
+    color: #ef3d3d;
+}
+
+.buttons{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    align-content: center;
+    justify-content: left;
+}
+
+.solve_button,.clear_button_m,.clear_button_v{
+    padding:10px 50px;
+    border-radius:5px ;
+    margin: 4px 10px;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+
+    background-color: #a1c4ec;
+    border:2px solid #7e0738;
+    cursor:pointer;
+
+    font-family: a_AlbionicTitulInfl, serif;
+    font-style:inherit;
+    font-size: 14px;
+}
+
+.clear_button_m,.clear_button_v{
+    margin-left: 50px;
+    font-size: 8px;
+}
+
+span#error{
+    color:darkred;
+}
+span#steps{
+    background-color: aliceblue;
+}
+
+.output{
+    flex-direction: row;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+}
+.straight_part,.reverse_part{
+   width:40%;
+    height:20%;
+    background-color: white;
+}
+
+.solve_button:hover,.clear_button_m:hover,.clear_button_v:hover {
+    background-color: #2864a4;
+    transition-duration: 1.0s;
+}

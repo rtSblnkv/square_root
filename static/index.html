@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Метод квадратного корня</title>
+    <link rel="stylesheet" href="/static/style.css"/>
+    <script>
+        function get_matrix(){
+    document.querySelector("#error").innerText += "\nПолучаю матрицу";
+    let matrix =[];
+    document
+        .querySelectorAll(".matrix_row")
+        .forEach(matrix_row => {
+            let row = [];
+            for (child of matrix_row.children) {
+                row.push(Number(child.firstChild.value));
+            }
+            matrix.push(row);
+        });
+    document.querySelector("#error").innerText += "\n"+ matrix;
+    return matrix;
+}
+
+function clear_matrix(){
+     document.querySelector("#error").innerText += "\nОчищаю матрицу";
+     document
+         .querySelectorAll(".slau_element")
+         .forEach(function (item){
+             item.value ="";
+         })
+}
+
+function clear_vector(){
+     document.querySelector("#error").innerText += "\nОчищаю вектор";
+     document
+         .querySelectorAll(".vector_element")
+         .forEach(function (item){
+             item.value ="";
+         })
+}
+
+function get_vector(){
+    document.querySelector("#error").innerText += "\nПолучаю вектор";
+    let vector =[];
+    document.querySelectorAll(".vector_element")
+        .forEach(vector_element =>{
+            vector.push(Number(vector_element.value));
+        });
+     document.querySelector("#error").innerText += "\n"+ vector;
+    return vector;
+}
+
+function show_error(message){
+    document.querySelector("#error").innerText = "Ошибка!" + message;
+}
+
+function output_solution(result){
+      document.querySelector("#error").innerText += "\nВывожу результат";
+      let html = '';
+      for(let i = 0;i < result.length;i++)
+      {
+          html += '<tr><td>' + result[i] + '</td></tr>'
+      }
+      document.getElementById('result').innerHTML = html;
+}
+
+function output_steps(Y,d){
+            let output = "Y: "
+    for(let i = 0; i< Y.length;i++)
+    {
+        output += "\n "+ Y[i];
+    }
+    output +="\n d:"
+    for(let i = 0; i< d.length;i++)
+    {
+        output += "\n "+ d[i];
+    }
+
+    document.getElementById('steps').textContent = output;
+}
+
+function solve_system(){
+    const slau_matrix = get_matrix();
+    const vector = get_vector();
+    let system = {
+    "matrix":slau_matrix,
+    "vector":vector
+};
+    fetch('/solve',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify(system)
+    })
+        .then(response =>{
+            if(!response.ok){
+                throw response;
+            }
+            return response.json();
+        })
+        .then(solution => {
+            output_solution(solution.result);
+            output_steps(solution.y,solution.d)
+        })
+        .catch(error => error.json().then(error_json => show_error(error_json.message)))
+}
+    </script>
+</head>
+<body>
+<div>
+    <h1>Метод квадратного корня</h1>
+</div>
+<div>
+    <h2>Введите коэффициенты СЛАУ Ax=B 6х6</h2>
+</div>
+<div>
+    <h5>В пропущенных ячейках будет по умолчанию стоять 0</h5>
+</div>
+<div class="slau">
+    <div>
+        <label> A </label>
+        <table class="slau_matrix" >
+            <tbody>
+            <tr class = "matrix_row">
+                <td><input class="slau_element" type="text" name="1"/></td>
+                <td><input class="slau_element" type="text" name="2"/></td>
+                <td><input class="slau_element" type="text" name="3"/></td>
+                <td><input class="slau_element" type="text" name="4"/></td>
+                <td><input class="slau_element" type="text" name="5"/></td>
+                <td><input class="slau_element" type="text" name="6"/></td>
+            </tr>
+            <tr class = "matrix_row">
+                <td><input class="slau_element" type="text" name="7"/></td>
+                <td><input class="slau_element" type="text" name="8"/></td>
+                <td><input class="slau_element" type="text" name="9"/></td>
+                <td><input class="slau_element" type="text" name="10"/></td>
+                <td><input class="slau_element" type="text" name="11"/></td>
+                <td><input class="slau_element" type="text" name="12"/></td>
+            </tr>
+            <tr class = "matrix_row">
+                <td><input class="slau_element" type="text" name="13"/></td>
+                <td><input class="slau_element" type="text" name="14"/></td>
+                <td><input class="slau_element" type="text" name="15"/></td>
+                <td><input class="slau_element" type="text" name="16"/></td>
+                <td><input class="slau_element" type="text" name="17"/></td>
+                <td><input class="slau_element" type="text" name="18"/></td>
+            </tr>
+            <tr class = "matrix_row">
+                <td><input class="slau_element" type="text" name="19"/></td>
+                <td><input class="slau_element" type="text" name="20"/></td>
+                <td><input class="slau_element" type="text" name="21"/></td>
+                <td><input class="slau_element" type="text" name="22"/></td>
+                <td><input class="slau_element" type="text" name="23"/></td>
+                <td><input class="slau_element" type="text" name="24"/></td>
+            </tr>
+            <tr class = "matrix_row">
+                <td><input class="slau_element" type="text" name="25"/></td>
+                <td><input class="slau_element" type="text" name="26"/></td>
+                <td><input class="slau_element" type="text" name="27"/></td>
+                <td><input class="slau_element" type="text" name="28"/></td>
+                <td><input class="slau_element" type="text" name="29"/></td>
+                <td><input class="slau_element" type="text" name="30"/></td>
+            </tr>
+            <tr class = "matrix_row">
+                <td><input class="slau_element" type="text" name="31"/></td>
+                <td><input class="slau_element" type="text" name="32"/></td>
+                <td><input class="slau_element" type="text" name="33"/></td>
+                <td><input class="slau_element" type="text" name="34"/></td>
+                <td><input class="slau_element" type="text" name="35"/></td>
+                <td><input class="slau_element" type="text" name="36"/></td>
+            </tr>
+            </tbody>
+        </table >
+    </div>
+    <div>
+        <label> B</label>
+        <table class="vector">
+            <tr><td><input class="vector_element" type="text" name="111"/></td></tr>
+            <tr><td><input class="vector_element" type="text" name="112"/></td></tr>
+            <tr><td><input class="vector_element" type="text" name="113"/></td></tr>
+            <tr><td><input class="vector_element" type="text" name="114"/></td></tr>
+            <tr><td><input class="vector_element" type="text" name="115"/></td></tr>
+            <tr><td><input class="vector_element" type="text" name="116"/></td></tr>
+        </table>
+    </div>
+
+     <div>
+        <label> Result </label>
+        <table id="result" width="40px" border="1" cellspacing="3" bgcolor="#f0f8ff" >
+
+        </table>
+    </div>
+
+    </div>
+</div>
+<div class="buttons">
+    <input class = "solve_button" type="button" onclick="solve_system()" value = "Решить"/>
+    <input class = "clear_button_m" type="button" onclick="clear_matrix()" value = "Очистить матрицу"/>
+    <input class = "clear_button_v" type="button" onclick="clear_vector()" value = "Очистить вектор"/>
+</div>
+    <div>
+          <span id="error"></span>
+    </div>
+
+    <div>
+         <span  id="steps"></span>
+    </div>
+
+</body>
+</html>
